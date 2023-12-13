@@ -1,6 +1,6 @@
 import {UserForm} from "./components/UserForm.jsx";
 import {UsersList} from "./components/UsersList.jsx";
-import {useReducer} from "react";
+import {useReducer, useState} from "react";
 import {usersReducer} from "./reducers/usersReducer.js";
 
 const initialUsers = [
@@ -12,9 +12,17 @@ const initialUsers = [
 
     }
 ]
+
+const initialUserForm = {
+    id:0,
+    username:"",
+    password:"",
+    email:""
+}
 export const UsersApp = ()=> {
 
     const [users,dispatch] = useReducer(usersReducer,initialUsers)
+    const [userSelected, setUselected] = useState(initialUserForm)
     const handlerAddUser = (user) => {
         console.log(user)
         dispatch({
@@ -31,6 +39,13 @@ export const UsersApp = ()=> {
         })
     }
 
+    const handlerUserSelectedForm=(user)=> {
+       // console.log(user)
+        setUselected({
+            ...user
+        })
+    }
+
     return(
         <>
             <div className={'container my-4'}>
@@ -38,15 +53,25 @@ export const UsersApp = ()=> {
                 <div className={'row'}>
                     <div className={'col'}>
                         <UserForm
+                            initialUserForm={initialUserForm}
+                            userSelected={userSelected}
                             handlerAddUser ={handlerAddUser}
                         />
                     </div>
                     <div className={'col'}>
+                        {
+                            users.length === 0 ?
+                            <div className={'alert alert-warning'}>
+                                No hay usuarios en el sistema!
+                            </div>
+                            :
                         <UsersList
-                            handlerRemoveUser ={handlerRemoveUser}
-                            users={users}
+                            handlerUserSelectedForm={handlerUserSelectedForm}
+                                handlerRemoveUser ={handlerRemoveUser}
+                                users={users}
+                                />
+                        }
 
-                        />
                     </div>
                 </div>
 
