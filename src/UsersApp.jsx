@@ -25,8 +25,14 @@ export const UsersApp = ()=> {
     const [userSelected, setUselected] = useState(initialUserForm)
     const handlerAddUser = (user) => {
         console.log(user)
+        let type;
+        if(user.id === 0){
+            type='addUser'
+        }else{
+            type='updateUser'
+        }
         dispatch({
-            type:'addUser',
+            type,
             payload:user
         })
     }
