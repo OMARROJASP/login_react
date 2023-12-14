@@ -20,8 +20,7 @@ export const UserRow = ({
                             onClick={() => handlerUserSelectedForm({
                                 id,
                                 username,
-                                email,
-                                password
+                                email
                             })}
                 >Update</button></td>
                 <td><button type={"button"}
